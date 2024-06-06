@@ -1,0 +1,13 @@
+## Difference:
+- State
+	- Is cold, meaning data is produced only when requested
+	- Objects don't get notified but must request from the Flow
+	- Ideal for databases, etc.
+- StateFlow
+	- Is hot, always contains the most recent/up-to-date value
+	- Notifies observers when value changes
+	- Ideal for notifying observers
+- MutableStateFlow
+	- Same a StateFlow, but allows for the value to assigned a new value
+		- Ideal for situations where your program logic indicates it has completed something
+	- Triggers a recompose on observers
