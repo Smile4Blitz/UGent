@@ -1,0 +1,82 @@
+@startuml oefening1
+' THIS IS WRONG, SEQUENCE DIAGRAMS ARE DESCRIBED BY CLASSES AND OBJECTS!!!
+
+actor opleidingsverantwoordelijke
+actor bediende
+participant cursussysteem
+boundary website
+collections deelnemers
+boundary facturatiesysteem
+
+== aanmaken ==
+loop foreach cursus
+    activate opleidingsverantwoordelijke
+    opleidingsverantwoordelijke -> opleidingsverantwoordelijke: kies cursus
+    opleidingsverantwoordelijke -> cursussysteem: voeg cursus toe
+    activate cursussysteem
+    cursussysteem --> opleidingsverantwoordelijke: cursus toegevoegd
+    deactivate cursussysteem
+    deactivate opleidingsverantwoordelijke
+end
+
+== publiceren ==
+loop foreach cursus
+    bediende -> cursussysteem: publiceer cursus
+    activate bediende
+    activate cursussysteem
+
+    cursussysteem ->> website: update website
+    activate website
+
+    cursussysteem ->> deelnemers: update deelnemers
+    activate deelnemers
+    deactivate deelnemers
+    note right: "MaRKeTIng"
+
+    website --> cursussysteem: cursus gepubliseerd
+    deactivate website
+
+    cursussysteem --> bediende: cursus gepubliceerd
+    deactivate bediende
+    deactivate cursussysteem
+end
+
+== inschrijven ==
+loop voor elke deelnemer
+    opt inschrijven via website
+        deelnemers -> website: inschrijven
+        activate deelnemers
+        activate website
+        website -> cursussysteem: schrijf in
+        deactivate website
+        activate cursussysteem
+        cursussysteem ->> deelnemers: bevestingmail
+        cursussysteem --> deelnemers: inschrijving succesvol
+        deactivate cursussysteem
+        deactivate deelnemers
+        else
+        deelnemers -> bediende: inschrijven
+        activate deelnemers
+        activate bediende
+        bediende -> cursussysteem: schrijf in
+        activate cursussysteem
+        cursussysteem ->> deelnemers: bevestigingmail
+        cursussysteem --> bediende: inschrijving succesvol
+        deactivate cursussysteem
+        deactivate deelnemers
+        deactivate bediende
+    end
+end
+
+== facturatie ==
+loop voor elke deelnemer
+    cursussysteem -> facturatiesysteem: stuur facturatie-info
+    activate facturatiesysteem
+    activate cursussysteem
+    facturatiesysteem --> cursussysteem: factuur aangemaakt
+    deactivate facturatiesysteem
+    cursussysteem -> cursussysteem: factuurIsAangemaakt = OK
+end
+deactivate cursussysteem
+
+@enduml

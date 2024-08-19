@@ -1,0 +1,38 @@
+@startuml Bridge
+skinparam Linetype ortho
+skinparam ClassAttributeIconSize 0
+
+class client {
+    + BridgeObj:ABridge
+}
+client -right- BridgeAssembly.ABridge
+
+namespace BridgeAssembly {
+    abstract class ABridge {
+        - bridge:IBridge
+        + Operation():void
+    }
+    ABridge o-right- IBridge
+
+    interface IBridge {
+        Operation():void
+    }
+    IBridge <|.. OldVersionProxy
+    IBridge <|.down. NewVersionComponent
+
+    class NewVersionComponent {
+        + Operation():void
+    }
+
+    class OldVersionProxy {
+        - component:OldVersionComponent
+        + Operation():void
+    }
+    OldVersionProxy o-down- OldVersionComponent
+
+    class OldVersionComponent {
+        + Operation():void
+    }
+}
+
+@enduml

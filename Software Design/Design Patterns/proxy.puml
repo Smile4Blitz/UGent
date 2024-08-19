@@ -1,0 +1,36 @@
+@startuml Proxy
+skinparam ClassAttributeIconSize 0
+skinparam Linetype ortho
+
+class client {
+    + ProxyObj:IProxy
+}
+client -right- proxyAssembly.IProxy
+
+namespace proxyAssembly {
+    interface IProxy {
+        + Operation():void
+    }
+    IProxy <|.. Proxy
+
+    class Proxy {
+        - object:Component
+        + Operation():void
+    }
+    Proxy o-- Component
+
+    class Component {
+        + Operation():void
+    }
+
+    note right of Proxy
+        Proxy Operation() is different
+        from Component Operation()
+
+        Usually Proxy operation is a small
+        method that then calls on the more
+        elaborate Component Operation()
+    end note
+}
+
+@enduml

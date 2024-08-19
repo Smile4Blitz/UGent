@@ -1,0 +1,32 @@
+@startuml oefening
+
+| opleidingsverantwoordelijke |
+start
+:catalogus opstellen;
+
+| bediende |
+:publiceer opleiding;
+
+fork
+    :publiceer website;
+fork again
+    :publiceer mail;
+end fork
+
+| deelnemer |
+:registreer;
+
+| registratiesysteem |
+if (registratie via bediende?) then (yes)
+    | bediende |
+    :manuele registratie;
+else (no)
+    | registratiesysteem |
+    :automatische registratie;
+endif
+
+| facturatiesysteem |
+:maak factuur;
+stop
+
+@enduml

@@ -1,0 +1,11 @@
+# .NET 8 specific
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.vscode
+.vs/
+.idea/
+*.sln.iml

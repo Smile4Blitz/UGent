@@ -1,0 +1,51 @@
+@startuml oefening1
+
+actor bediende
+
+' actor student
+' actor docent
+
+package inschrijvingsysteem {
+    usecase student as "student"
+    usecase docent as "docent"
+
+    usecase studentOpvragen as "student opvragen"
+    usecase docentOpvragen as "docent opvragen"
+
+    usecase inschrijven as "inschrijven
+    --
+    Schrijven we een student 
+    of een docent in?"
+    usecase studentInschrijven as "student inschrijven"
+    usecase docentInschrijven as "docent inschrijven"
+
+    usecase opvragen as "opvragen 
+    --
+    Welk type persoon
+    vragen we op?"
+
+    usecase opleidingsOnderdeel as "opleidingsonderdeel"
+}
+
+docentInschrijven -up-|> inschrijven: <<extends>>
+studentInschrijven -up-|> inschrijven: <<extends>>
+
+student -up-|> studentInschrijven: <<include>>
+docent -up-|> docentInschrijven: <<include>>
+
+opleidingsOnderdeel -up-|> studentInschrijven: <<include>>
+opleidingsOnderdeel -up-|> docentInschrijven: <<include>>
+
+student -up-|> opleidingsOnderdeel: <<include>>
+
+studentOpvragen -up-|> opvragen: <<extends>>
+docentOpvragen -up-|> opvragen: <<extends>>
+
+student -up-|> studentOpvragen: <<include>>
+docent -up-|> docentOpvragen: <<include>>
+docent -up-|> opleidingsOnderdeel: <<include>>
+
+bediende -right- inschrijven
+bediende -right- opvragen
+
+@enduml

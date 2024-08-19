@@ -1,0 +1,38 @@
+@startuml Decorator
+skinparam ClassAttributeIconSize 0
+skinparam Linetype ortho
+
+class client {
+    + DecoratorObj: IComponent
+}
+client -right- DecoratorAssembly.IComponent
+
+namespace DecoratorAssembly {
+    interface IComponent {
+        + Operation():void
+    }
+
+    class Component {
+        ' + Component(in input:String) -- Optional, could create an empty object also
+        + Operation():void
+    }
+    IComponent <|.. Component
+
+    class Decorator1 {
+        - component:IComponent
+        + Decorator(in input:IComponent)
+        + Operation():void
+    }
+    IComponent <|.. Decorator1
+    IComponent --o Decorator1
+
+    class Decorator2 {
+        - component:IComponent
+        + Decorator(in input:IComponent)
+        + Operation():void
+    }
+    IComponent <|.. Decorator2
+    IComponent --o Decorator2
+}
+
+@enduml

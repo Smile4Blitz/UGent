@@ -1,0 +1,9 @@
+AddComposite Arno
+AddComponent Arno Arno This is a description
+AddComponent Arno Steve This is a description
+AddComposite Bob
+AddComponent Bob Bob This is a description
+AddComponent Bob Brad This is a description
+AddComposite Silke
+AddComponent Silke Silke This is a description
+AddComponent Silke Jerome This is a description

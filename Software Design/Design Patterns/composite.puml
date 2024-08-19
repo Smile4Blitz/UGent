@@ -1,0 +1,28 @@
+@startuml Composite
+skinparam Linetype ortho
+skinparam ClassAttributeIconSize 0
+
+class client {
+    + CompositeObj:IComponent
+}
+client -right- CompositeAssembly.IComponent
+
+namespace CompositeAssembly {
+    interface IComponent {
+        + method()
+    }
+    IComponent <|.. Component
+    IComponent <|.. Composits
+
+    class Component {
+        + method()
+    }
+
+    class Composits {
+        + list:List<IComponent>
+        + method()
+    }
+    Composits o-- "*" IComponent
+}
+
+@enduml

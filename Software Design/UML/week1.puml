@@ -1,0 +1,32 @@
+@startuml Studentenbeheersapplicatie
+class Persoon <<root>> {
+    # voornaam : String
+    # naam : String
+    # adres : String
+    # postcode : Integer
+    # gemeente : String
+    # geboortedatum : Date(YY:MM:DD) {frozen}
+}
+
+class Student <<leaf>> extends Persoon {
+    # curriculum[] : Opleidingsonderdeel
+    # getTotaalAantalStudiepunten() : Integer
+    # voegOpleidingsonderdeelToe(Opleidingsonderdeel vak)
+}
+
+class Docent <<leaf>> extends Persoon {
+    # vakken[] : Opleidingsonderdeel
+}
+
+class Opleidingsonderdeel {
+    + naam : String
+    + studiejaar : Date(YY)
+    + titularis : Docent
+    + aantalStudiepunten : Integer
+    + studenten[] : Student
+}
+
+Docent "-titularis" -- "-vakken..*" Opleidingsonderdeel
+Student "*" -- "-curriculum..*" Opleidingsonderdeel
+
+@enduml

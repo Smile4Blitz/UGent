@@ -1,0 +1,35 @@
+@startuml oefening1
+
+abstract class Persoon {
+    +voornaam:string{readOnly}
+    +naam:string{readOnly}
+    +adres:string
+    +postcode:integer
+    +/gemeente:varchar{afgeleid van postcode}
+    +geboortedatum:date{readOnly}
+    {abstract} +schrijfInVoorVak(in Persoon, inout Opleidingsonderdeel):void
+}
+
+class Student extends Persoon {
+    +curriculum:Opleidingsonderdeel[]{unique}
+    +getTotaalAantalStudiepunten():integer
+    +schrijfInVoorVak(in Persoon, inout Opleidingsonderdeel):void
+}
+
+class Docent extends Persoon {
+    +vakken:Opleidingsonderdeel[]{unique}
+    +schrijfInVoorVak(in Persoon, inout Opleidingsonderdeel):void
+}
+
+class Opleidingsonderdeel {
+    +naam:string
+    +studiejaar:date
+    +titularis:Docent
+    +aantalStudiepunten:integer
+    +studenten:Student[]{unique}
+}
+
+Opleidingsonderdeel "1..*" --up-- "1..*" Student: Neemt deel aan <
+Opleidingsonderdeel "1..*" --up-- "1" Docent: Geeft <
+
+@enduml

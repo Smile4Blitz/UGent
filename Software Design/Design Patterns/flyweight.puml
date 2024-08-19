@@ -1,0 +1,29 @@
+@startuml Flyweight
+skinparam Linetype ortho
+skinparam ClassAttributeIconSize 0
+
+class client {
+    + FlyweightObj:FlyweightFactory
+}
+client -right- FlyweightAssembly.FlyweightFactory
+client o-right- "*" FlyweightAssembly.Flyweight
+
+namespace FlyweightAssembly {
+    class FlyweightFactory {
+        + Flyweights:Dictionary<Flyweight>
+    }
+
+    interface IFlyweight {
+        - IntrinsicState:obj
+        + ExtrinsicState():obj
+    }
+    FlyweightFactory o-right- IFlyweight
+
+    class Flyweight {
+        + IntrinsicState:obj
+        + ExtrinsicState():obj
+    }
+    Flyweight .up.|> IFlyweight
+}
+
+@enduml

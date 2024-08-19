@@ -1,0 +1,59 @@
+@startuml Groepnr 25
+skinparam Linetype ortho
+skinparam classAttributeIconSize 0
+
+Note as Info
+Voornamen: Arno
+Groepnr: 25
+Gebruikte design pattern(s): Decorator
+end Note
+
+Note as Co
+Component
+end Note
+
+Note as De
+Decorator
+end Note
+
+interface ICodering {
+  Codeer(in codeer:String)
+}
+
+abstract class ACodering extends ICodering {
+  # codering:ICodering
+  + ACodering(in codering:ICodering)
+  + {abstract} Codeer(in bericht:ICodering):String
+}
+
+class Bericht extends ICodering {
+  + Codeer(in codeer:String)
+  + ToString():String
+}
+Bericht -- Co
+
+class Blok extends ACodering {
+  + Blok(in codering:ICodering)
+  + Codeer(in codeer:String):String
+  + ToString():String
+  - MaakEven():StringBuilder
+  - VerwijderSpecialeTekens():StringBuilder
+}
+
+class Cijfer extends ACodering {
+  + Cijfer(in codering:ICodering)
+  + Codeer(in codeer:String):String
+  + ToString():String
+}
+
+class Wissel extends ACodering {
+  + Wissel(in codering:ICodering)
+  + Codeer(in codeer:String):String
+  + ToString():String
+}
+
+Blok -- De
+Cijfer -- De
+Wissel -- De
+
+@enduml

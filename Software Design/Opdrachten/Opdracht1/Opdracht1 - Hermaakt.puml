@@ -1,0 +1,65 @@
+@startuml Groepnr 25
+skinparam Linetype ortho
+
+Note as Info
+Voornamen: Arno
+Groepnr: 25
+Gebruikte design pattern(s): Decorator
+end Note
+
+Note as Decorator
+Decorator
+Elke codeer methode vervangt 
+het object zin door de het resultaat van codeer
+end Note
+
+Note as Object
+Object
+Maakt een object aan waarin 
+de originele zin geplaatst wordt
+end Note
+
+abstract class Codering {
+  + {abstract} TypeCodering:string
+  + zin:string
+  + {abstract} codeer(in string):string
+  + {static} ToString():string
+}
+
+class Bericht extends Codering {
+  ~ Bericht(in string)
+}
+
+Bericht - Object
+
+class Blok {
+  + codeer(Codering input):
+  - MaakEven():StringBuilder
+  - VerwijderSpecialeTekens():StringBuilder
+}
+
+class Cijfer {
+  + codeer(Codering input)
+}
+
+class Wissel {
+  + codeer(Codering input)
+}
+
+class helper {
+  + coderingen:Dictionary<string, Codering>
+  ~ helper()
+}
+
+Codering --down-o Blok
+Codering <-down-- Blok
+Codering --down-o Cijfer
+Codering <-down-- Cijfer
+Codering --down-o Wissel
+Codering <-down-- Wissel
+
+Blok -- Decorator
+Cijfer -- Decorator
+Wissel -- Decorator
+
+@enduml
